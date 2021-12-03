@@ -23,5 +23,16 @@ defmodule MyBlockchain.LedgerTest do
       assert head.previous_hash == Block.hash!(prev_block)
       assert head.transcation == txn
     end
+
+    test "latest_block returns last block added in the chain" do
+      txn = %Transaction{sender: "gahan", recipient: "foobar", amount: 10}
+      [prev_block | _] = Ledger.chain()
+
+      Ledger.new_transaction(txn)
+      block = Ledger.latest_block()
+
+      assert block.previous_hash == Block.hash!(prev_block)
+      assert block.transcation == txn
+    end
   end
 end

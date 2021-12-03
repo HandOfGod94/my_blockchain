@@ -9,8 +9,8 @@ defmodule MyBlockchain.Block do
   However it must contain few required params: `proof` and `previous_hash`
   """
 
-  @derive Jason.Encoder
   defmodule Transaction do
+    @derive Jason.Encoder
     defstruct [:sender, :recipient, :amount]
   end
 
@@ -26,5 +26,6 @@ defmodule MyBlockchain.Block do
 
   def hash!(%__MODULE__{} = block) do
     Crypto.hash(:md5, Jason.encode!(block))
+    |> Base.encode64()
   end
 end
