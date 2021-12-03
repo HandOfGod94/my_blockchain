@@ -1,9 +1,11 @@
 defmodule MyBlockchain.Ledger do
   use GenServer
+  require Logger
   alias MyBlockchain.Block
   alias MyBlockchain.Block.Transaction
 
   def init(%Block{} = genesis_block) do
+    Logger.info("starting ledeger server")
     {:ok, [genesis_block]}
   end
 
@@ -12,6 +14,7 @@ defmodule MyBlockchain.Ledger do
   end
 
   def handle_cast({:new_transaction, transaction}, ledger) do
+    Logger.info("recording new transaction")
     [ledger_head_block | _] = ledger
 
     new_block = %Block{
@@ -27,14 +30,14 @@ defmodule MyBlockchain.Ledger do
   ## Client Apis
 
   def start_link(init_args) do
-    GenServer.start_link(__MODULE__, init_args, name: LedgerServer)
+    GenServer.start_link(__MODULE__, init_args, name: MyBlockchain.LedgerServer)
   end
 
   def new_transaction(%Transaction{} = transaction) do
-    GenServer.cast(LedgerServer, {:new_transaction, transaction})
+    GenServer.cast(MyBlockchain.LedgerServer, {:new_transaction, transaction})
   end
 
   def chain do
-    GenServer.call(LedgerServer, {:chain})
+    GenServer.call(MyBlockchain.LedgerServer, {:chain})
   end
 end

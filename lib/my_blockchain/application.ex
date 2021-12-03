@@ -3,13 +3,18 @@ defmodule MyBlockchain.Application do
   # for more information on OTP Applications
   @moduledoc false
 
+  alias MyBlockchain.Block
+
   use Application
+
+  @genesis_block %Block{id: "1", previous_hash: 1, proof: 100}
 
   @impl true
   def start(_type, _args) do
     children = [
       # Starts a worker by calling: MyBlockchain.Worker.start_link(arg)
       # {MyBlockchain.Worker, arg}
+      {MyBlockchain.Ledger, @genesis_block}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
