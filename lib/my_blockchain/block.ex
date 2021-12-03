@@ -1,4 +1,6 @@
 defmodule MyBlockchain.Block do
+  alias :crypto, as: Crypto
+
   @moduledoc """
   Represents a block of the whole blockchain.
   Each block can contain any arbitrary information.
@@ -7,15 +9,22 @@ defmodule MyBlockchain.Block do
   However it must contain few required params: `proof` and `previous_hash`
   """
 
+  @derive Jason.Encoder
   defmodule Transaction do
     defstruct [:sender, :recipient, :amount]
   end
 
+  @derive Jason.Encoder
+  @enforce_keys [:id, :previous_hash, :proof]
   defstruct [
-    :index,
-    :transacitons,
+    :id,
+    :transcation,
     :proof,
     :previous_hash,
     timestamp: DateTime.to_unix(DateTime.utc_now())
   ]
+
+  def hash!(%__MODULE__{} = block) do
+    Crypto.hash(:md5, Jason.encode!(block))
+  end
 end
