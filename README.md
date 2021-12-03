@@ -1,6 +1,8 @@
 # MyBlockchain
 
-**TODO: Add description**
+Sample pet-project to understand how blockchain works using elixir
+
+Refer: [Learn blockchain by building one](https://hackernoon.com/learn-blockchains-by-building-one-117428612f46)
 
 ## Installation
 
