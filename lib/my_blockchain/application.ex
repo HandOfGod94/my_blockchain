@@ -14,7 +14,8 @@ defmodule MyBlockchain.Application do
     children = [
       # Starts a worker by calling: MyBlockchain.Worker.start_link(arg)
       # {MyBlockchain.Worker, arg}
-      {MyBlockchain.Ledger, @genesis_block}
+      MyBlockchain.TransactionServer,
+      {MyBlockchain.BlockChainServer, @genesis_block}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
