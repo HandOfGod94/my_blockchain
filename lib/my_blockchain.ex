@@ -14,13 +14,7 @@ defmodule MyBlockchain do
 
     intial_proof
     |> Stream.iterate(&(&1 + 1))
-    |> Enum.reduce_while(0, fn i, _acc ->
-      if valid_proof(last_proof, i) do
-        {:halt, i}
-      else
-        {:cont, i}
-      end
-    end)
+    |> Enum.find(&valid_proof(last_proof, &1))
   end
 
   defp valid_proof(last_proof, new_proof) do
