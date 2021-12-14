@@ -6,7 +6,7 @@ defmodule MyBlockchain.BlockChainServer do
   alias MyBlockchain.Block.Transaction
 
   def init(%Block{} = genesis_block) do
-    Logger.info("starting ledeger server")
+    Logger.info("starting blockchain server")
     {:ok, [genesis_block]}
   end
 
