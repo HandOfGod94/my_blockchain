@@ -19,7 +19,7 @@ defmodule MyBlockchain.BlockChainServer do
     {:reply, head, ledger}
   end
 
-  def handle_call({:mine, transaction, proof}, from, ledger) do
+  def handle_call({:mine, transaction, proof, miner}, _from, ledger) do
     Logger.info("creating new block")
     [ledger_head_block | _] = ledger
 
@@ -33,7 +33,7 @@ defmodule MyBlockchain.BlockChainServer do
     # reward miner
     TransactionServer.new_transaction(%Transaction{
       sender: "0",
-      recipient: from,
+      recipient: miner,
       amount: 1
     })
 
@@ -46,8 +46,8 @@ defmodule MyBlockchain.BlockChainServer do
     GenServer.start_link(__MODULE__, init_args, name: __MODULE__)
   end
 
-  def mine(%Transaction{} = transaction, proof) do
-    GenServer.call(__MODULE__, {:mine, transaction, proof})
+  def mine(transaction, proof, miner) do
+    GenServer.call(__MODULE__, {:mine, transaction, proof, miner})
   end
 
   def chain do

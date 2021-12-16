@@ -27,7 +27,7 @@ defmodule MyBlockchain.Block do
   def hash!(%__MODULE__{} = block) do
     block
     |> Jason.encode!()
-    |> then(&Crypto.hash(:md5, &1))
+    |> then(&Crypto.hash(:sha256, &1))
     |> Base.encode64()
   end
 end
