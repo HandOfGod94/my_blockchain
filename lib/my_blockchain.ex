@@ -4,7 +4,7 @@ defmodule MyBlockchain do
   @doc """
   we will be using a sample proof of work algo.
 
-  Our engame for work will be:
+  Goal to determine poof for work will be:
   * find a number `p` such that `hash(pp')` contains 2 leading zeroes
   p = previous proof
   p' = new proof
