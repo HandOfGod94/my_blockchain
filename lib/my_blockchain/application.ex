@@ -14,7 +14,8 @@ defmodule MyBlockchain.Application do
     children = [
       # Starts a worker by calling: MyBlockchain.Worker.start_link(arg)
       # {MyBlockchain.Worker, arg}
-      MyBlockchain.TransactionServer,
+      MyBlockchain.Transaction.Publisher,
+      {MyBlockchain.Transaction.Subscriber, []},
       {MyBlockchain.BlockChainServer, @genesis_block}
     ]
 

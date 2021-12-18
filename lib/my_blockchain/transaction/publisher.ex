@@ -21,7 +21,8 @@ defmodule MyBlockchain.Transaction.Publisher do
   end
 
   def handle_call({:transaction, event}, _from, state) do
-    {:reply, :ok, [event], state}
+    Logger.info("publishing transaction")
+    {:reply, {:ok, :create_transaction_event}, [event], state}
   end
 
   def handle_demand(_demand, state) do

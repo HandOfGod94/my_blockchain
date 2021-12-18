@@ -2,7 +2,7 @@ defmodule MyBlockchain.BlockChainServer do
   use GenServer
   require Logger
   alias MyBlockchain.{Block, Transaction}
-  alias MyBlockchain.TransactionServer
+  alias MyBlockchain.Transaction.Publisher
 
   ## client apis
 
@@ -40,22 +40,23 @@ defmodule MyBlockchain.BlockChainServer do
 
   def handle_call({:mine, transaction, proof, miner}, _from, ledger) do
     Logger.info("creating new block")
-    [ledger_head_block | _] = ledger
+    head_block = Enum.at(ledger, 0)
 
-    new_block = %Block{
-      id: Nanoid.generate(),
-      transcation: transaction,
-      proof: proof,
-      previous_hash: Block.hash!(ledger_head_block)
-    }
+    valid_proof? =
+      head_block
+      |> Map.get(:proof)
+      |> MyBlockchain.valid_proof?(proof)
 
-    # reward miner aka print money for circulation
-    TransactionServer.new_transaction(%Transaction{
-      sender: "0",
-      recipient: miner,
-      amount: 1
-    })
+    if valid_proof? do
+      new_block = Block.new(transaction, proof, Block.hash!(head_block))
+      reward_miner(miner)
+      {:reply, {:ok, {:new_block_forged, new_block.id}}, [new_block | ledger]}
+    else
+      {:reply, {:error, :invalid_proof}, ledger}
+    end
+  end
 
-    {:reply, {:ok, {:new_block_forged, new_block.id}}, [new_block | ledger]}
+  defp reward_miner(miner) do
+    Publisher.publish_transaction(%Transaction{sender: "0", recipient: miner, amount: 1})
   end
 end

@@ -14,10 +14,10 @@ defmodule MyBlockchain do
 
     intial_proof
     |> Stream.iterate(&(&1 + 1))
-    |> Enum.find(&valid_proof(last_proof, &1))
+    |> Enum.find(&valid_proof?(last_proof, &1))
   end
 
-  defp valid_proof(last_proof, new_proof) do
+  def valid_proof?(last_proof, new_proof) do
     "#{last_proof}#{new_proof}"
     |> then(&Crypto.hash(:sha256, &1))
     |> Base.encode16()

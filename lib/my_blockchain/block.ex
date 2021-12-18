@@ -13,11 +13,20 @@ defmodule MyBlockchain.Block do
   @enforce_keys [:id, :previous_hash, :proof]
   defstruct [
     :id,
-    :transcation,
+    :transaction,
     :proof,
     :previous_hash,
     timestamp: DateTime.to_unix(DateTime.utc_now())
   ]
+
+  def new(transaction, proof, previous_hash) do
+    %__MODULE__{
+      id: Nanoid.generate(),
+      transaction: transaction,
+      proof: proof,
+      previous_hash: previous_hash
+    }
+  end
 
   def hash!(%__MODULE__{} = block) do
     block
