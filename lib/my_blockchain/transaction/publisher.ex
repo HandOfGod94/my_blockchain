@@ -1,5 +1,6 @@
 defmodule MyBlockchain.Transaction.Publisher do
   use GenStage
+  require Logger
   alias MyBlockchain.Transaction
 
   ## client apis
@@ -8,17 +9,18 @@ defmodule MyBlockchain.Transaction.Publisher do
     GenStage.start_link(__MODULE__, :ok, name: __MODULE__)
   end
 
-  def publish_transaction_created(%Transaction{} = txn, timeout \\ 5000) do
-    GenStage.call(__MODULE__, {:transaction_created, txn}, timeout)
+  def publish_transaction(%Transaction{} = txn, timeout \\ 5000) do
+    GenStage.call(__MODULE__, {:transaction, txn}, timeout)
   end
 
   ## server apis
 
   def init(:ok) do
+    Logger.info("starting transaction publisher")
     {:producer, :ok, dispatcher: GenStage.BroadcastDispatcher}
   end
 
-  def handle_call({:transaction_created, event}, _from, state) do
+  def handle_call({:transaction, event}, _from, state) do
     {:reply, :ok, [event], state}
   end
 
