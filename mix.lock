@@ -1,4 +1,5 @@
 %{
+  "gen_stage": {:hex, :gen_stage, "1.1.2", "b1656cd4ba431ed02c5656fe10cb5423820847113a07218da68eae5d6a260c23", [:mix], [], "hexpm", "9e39af23140f704e2b07a3e29d8f05fd21c2aaf4088ff43cb82be4b9e3148d02"},
   "jason": {:hex, :jason, "1.2.2", "ba43e3f2709fd1aa1dce90aaabfd039d000469c05c56f0b8e31978e03fa39052", [:mix], [{:decimal, "~> 1.0 or ~> 2.0", [hex: :decimal, repo: "hexpm", optional: true]}], "hexpm", "18a228f5f0058ee183f29f9eae0805c6e59d61c3b006760668d8d18ff0d12179"},
   "nanoid": {:hex, :nanoid, "2.0.5", "1d2948d8967ef2d948a58c3fef02385040bd9823fc6394bd604b8d98e5516b22", [:mix], [], "hexpm", "956e8876321104da72aa48770539ff26b36b744cd26753ec8e7a8a37e53d5f58"},
 }

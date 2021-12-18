@@ -4,6 +4,26 @@ defmodule MyBlockchain.BlockChainServer do
   alias MyBlockchain.{Block, Transaction}
   alias MyBlockchain.TransactionServer
 
+  ## client apis
+
+  def start_link(init_args) do
+    GenServer.start_link(__MODULE__, init_args, name: __MODULE__)
+  end
+
+  def mine(transaction, proof, miner) do
+    GenServer.call(__MODULE__, {:mine, transaction, proof, miner})
+  end
+
+  def chain do
+    GenServer.call(__MODULE__, {:chain})
+  end
+
+  def latest_block do
+    GenServer.call(__MODULE__, {:latest_block})
+  end
+
+  ## server handlers
+
   def init(%Block{} = genesis_block) do
     Logger.info("starting blockchain server")
     {:ok, [genesis_block]}
@@ -37,23 +57,5 @@ defmodule MyBlockchain.BlockChainServer do
     })
 
     {:reply, {:ok, {:new_block_forged, new_block.id}}, [new_block | ledger]}
-  end
-
-  ## Client Apis
-
-  def start_link(init_args) do
-    GenServer.start_link(__MODULE__, init_args, name: __MODULE__)
-  end
-
-  def mine(transaction, proof, miner) do
-    GenServer.call(__MODULE__, {:mine, transaction, proof, miner})
-  end
-
-  def chain do
-    GenServer.call(__MODULE__, {:chain})
-  end
-
-  def latest_block do
-    GenServer.call(__MODULE__, {:latest_block})
   end
 end
