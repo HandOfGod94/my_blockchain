@@ -3,7 +3,7 @@ defmodule MyBlockchain.BlockChainServerTest do
   doctest MyBlockchain.BlockChainServer
   alias MyBlockchain.BlockChainServer
   alias MyBlockchain.Block
-  alias MyBlockchain.Block.Transaction
+  alias MyBlockchain.Transaction
 
   describe "BlockChainServer api" do
     setup do

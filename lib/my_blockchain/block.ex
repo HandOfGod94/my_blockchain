@@ -9,11 +9,6 @@ defmodule MyBlockchain.Block do
   However it must contain few required params: `proof` and `previous_hash`
   """
 
-  defmodule Transaction do
-    @derive Jason.Encoder
-    defstruct [:sender, :recipient, :amount]
-  end
-
   @derive Jason.Encoder
   @enforce_keys [:id, :previous_hash, :proof]
   defstruct [

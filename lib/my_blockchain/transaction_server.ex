@@ -1,7 +1,7 @@
 defmodule MyBlockchain.TransactionServer do
   use GenServer
   require Logger
-  alias MyBlockchain.Block.Transaction
+  alias MyBlockchain.Transaction
 
   @blank_transaction_ledger []
 

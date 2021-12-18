@@ -2,7 +2,7 @@ defmodule MyBlockchain.TransactionServerTest do
   use ExUnit.Case, async: true
   doctest MyBlockchain.TransactionServer
   alias MyBlockchain.TransactionServer
-  alias MyBlockchain.Block.Transaction
+  alias MyBlockchain.Transaction
 
   setup do
     TransactionServer.start_link([])

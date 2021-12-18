@@ -1,9 +1,8 @@
 defmodule MyBlockchain.BlockChainServer do
   use GenServer
   require Logger
-  alias MyBlockchain.Block
+  alias MyBlockchain.{Block, Transaction}
   alias MyBlockchain.TransactionServer
-  alias MyBlockchain.Block.Transaction
 
   def init(%Block{} = genesis_block) do
     Logger.info("starting blockchain server")
@@ -30,7 +29,7 @@ defmodule MyBlockchain.BlockChainServer do
       previous_hash: Block.hash!(ledger_head_block)
     }
 
-    # reward miner
+    # reward miner aka print money for circulation
     TransactionServer.new_transaction(%Transaction{
       sender: "0",
       recipient: miner,
