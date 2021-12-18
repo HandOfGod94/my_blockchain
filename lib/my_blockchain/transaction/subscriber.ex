@@ -15,17 +15,17 @@ defmodule MyBlockchain.Transaction.Subscriber do
 
   ## server apis
 
-  def init(state) do
+  def init(transaction_ledger) do
     Logger.info("starting transaction subscriber")
 
-    {:consumer, state, subscribe_to: [Publisher]}
+    {:consumer, transaction_ledger, subscribe_to: [Publisher]}
   end
 
-  def handle_call({:transactions}, _from, state) do
-    {:reply, state, [], state}
+  def handle_call({:transactions}, _from, transaction_ledger) do
+    {:reply, transaction_ledger, [], transaction_ledger}
   end
 
-  def handle_events(events, _from, state) do
-    {:noreply, [], events ++ state}
+  def handle_events(transactions, _from, transaction_ledger) do
+    {:noreply, [], transactions ++ transaction_ledger}
   end
 end
