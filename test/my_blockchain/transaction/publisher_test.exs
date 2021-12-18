@@ -1,5 +1,5 @@
 defmodule MyBlockchain.Transaction.PublisherTest do
-  use ExUnit.Case, async: true
+  use ExUnit.Case, async: false
   doctest MyBlockchain.Transaction.Publisher
   alias MyBlockchain.Transaction.Publisher
   alias MyBlockchain.Transaction

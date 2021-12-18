@@ -1,5 +1,5 @@
 defmodule MyBlockchain.Transaction.SubscriberTest do
-  use ExUnit.Case, async: true
+  use ExUnit.Case, async: false
   doctest MyBlockchain.Transaction.Subscriber
   alias MyBlockchain.Transaction.Subscriber
   alias MyBlockchain.Transaction
